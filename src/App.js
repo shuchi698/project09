@@ -1,36 +1,25 @@
-import React, { useState } from "react";
-import Collection from "./components/collection";
-import Navbar from "./components/navbar";
-import Cart from "./components/cart";
+import './App.css';
+import { Routes, Route, Navigate } from "react-router-dom";
+import Home from './components/Home/Home';
+import Header from './components/Header/Header';
+import ProductPage from './components/ProductPage/ProductPage';
+import Cart from './components/Cart/Cart';
+import Form from './components/Form/Form';
 
-const App = () => {
-  const [show, setShow] = useState(true);
-  const [cart, setCart] = useState([]);
-
-  const handleClick = (item) => {
-    if (cart.indexOf(item) !== -1) return;
-    setCart([...cart, item]);
-  };
-
-  const handleChange = (item, d) => {
-    const ind = cart.indexOf(item);
-    const arr = cart;
-    arr[ind].amount += d;
-
-    if (arr[ind].amount === 0) arr[ind].amount = 1;
-    setCart([...arr]);
-  };
-
-
+function App() {
   return (
-    <div>
-      <Navbar setShow={setShow} size={cart.length} />
-      {show ? (
-        <Collection handleClick={handleClick} />
-      ) : (
-        <Cart cart={cart} setCart={setCart} handleChange={handleChange} />
-      )}
+    <div className="App">
+      <Header />
+      <Routes>
+        <Route path="/" element={<Navigate to="/home" />} />
+        <Route path='/home' element={<Home />} />
+        <Route path="/products" element={<Home />} />
+        <Route path="/products/:id" element={<ProductPage />} />
+        <Route path='/cart' element={<Cart />} />
+        <Route path="/form" element={<Form />} />
+      </Routes>
     </div>
-  )
+  );
 }
-export default App
+
+export default App;
